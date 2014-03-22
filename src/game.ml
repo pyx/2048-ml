@@ -4,6 +4,8 @@
  * License: BSD New, see LICENSE for details.
  *)
 
+let version = "0.1"
+
 type move = Up | Down | Left | Right
 
 type action = Move of move | Reset | Quit | Invalid

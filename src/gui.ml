@@ -62,7 +62,7 @@ let draw_board board =
 
 let draw_info game =
   let width, height = window_size game in
-  let info = "2048 in OCaml, r to reset, q or <ESC> to quit" in
+  let info = "2048 in OCaml " ^ version ^ ", r to reset, q or <ESC> to quit" in
   set_color info_color;
   draw_centered_text 0 (height - margin) width margin info;
   let sign = "Copyright (c) 2014 pyx." in

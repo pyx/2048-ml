@@ -8,7 +8,8 @@ open Game
 
 let init _ =
   print_endline "Copyright (c) 2014, Philip Xu <pyx@xrefactor.com>";
-  print_endline "All rights reserved. With BSD New License."
+  print_endline "All rights reserved. With BSD New License.";
+  print_endline @@ "2048 in OCaml, Version " ^ version
 
 let repeat n a =
   let rec loop n acc =
@@ -38,7 +39,7 @@ let draw_board_text board =
   print_endline hr
 
 let render game =
-  print_endline "2048 in OCaml, r to reset, q or <ESC> to quit";
+  print_endline "r to reset, q or <ESC> to quit";
   draw_board_text (get_board game);
   match get_state game with
   | Win -> print_endline "You win!"

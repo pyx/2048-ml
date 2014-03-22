@@ -9,6 +9,9 @@
     Game logic of 2048.
  *)
 
+val version : string
+(** Version description *)
+
 type move = Up | Down | Left | Right
 (** Type of game movement. *)
 
