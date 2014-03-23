@@ -92,3 +92,10 @@ let move_up board =
 
 let move_down board =
   board |> transpose |> move_right |> transpose
+
+let move_available board =
+  has_empty_cell board ||
+  move_up board <> board ||
+  move_down board <> board ||
+  move_left board <> board ||
+  move_right board <> board

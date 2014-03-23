@@ -50,3 +50,6 @@ val move_up : t -> t
 
 val move_down : t -> t
 (** [move_down b] returns a new board as [b] being moved down. *)
+
+val move_available : t -> bool
+(** [move_available b] returns true if any cell on [b] is possible to move *)

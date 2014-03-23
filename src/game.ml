@@ -46,18 +46,10 @@ let spawn board =
     let num = if (Random.int 10 = 0) then 4 else 2 in
     playing (Board.set x y num board)
 
-let move_available board =
-  let open Board in
-  has_empty_cell board ||
-  move_up board <> board ||
-  move_down board <> board ||
-  move_left board <> board ||
-  move_right board <> board
-
 let check board =
   if Board.contains winning_number board then
     win board
-  else if move_available board then
+  else if Board.move_available board then
     playing board
   else
     lose board
