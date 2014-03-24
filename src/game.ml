@@ -4,7 +4,7 @@
  * License: BSD New, see LICENSE for details.
  *)
 
-let version = "0.1"
+let version = "0.2"
 
 type move = Up | Down | Left | Right
 
