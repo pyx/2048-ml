@@ -42,25 +42,17 @@ end
 val init : int -> int -> t
 (** [init x y] creates a new game with game board of size [x] by [y]. *)
 
-val get_state : t -> state
-(** [get_state g] returns game state of game [g]. *)
+val state : t -> state
+(** [state g] returns game state of game [g]. *)
 
-val get_board : t -> Board.t
-(** [get_board g] returns game board of game [g]. *)
+val board : t -> Board.t
+(** [board g] returns game board of game [g]. *)
 
-val lose : Board.t -> t
-(** [lose b] makes a lose game with game board [b]. *)
+val count : t -> int
+(** [count g] returns move count of game [g] so far. *)
 
-val win : Board.t -> t
-(** [win b] makes a lose game with game board [b]. *)
-
-val spawn : Board.t -> t
-(** [spawn b] returns a game with an element added randomly
-    in empty cell on game board [b].
- *)
-
-val check : Board.t -> t
-(** [check b] checks and update game state with game board [b]. *)
+val score : t -> int
+(** [score g] returns score of game [g] so far. *)
 
 val move : move -> t -> t
 (** [move m g] plays movement [m] on game [g]. *)

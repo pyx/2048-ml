@@ -26,8 +26,10 @@ module Infix = struct
   let ( >>= ) = Monad.bind
 end
 
-let get_state (state, _) = state
-let get_board (_, board) = board
+let state (s, _) = s
+let board (_, b) = b
+let count (_, b) = Board.count b
+let score (_, b) = Board.score b
 
 let winning_number = 2048
 
@@ -35,24 +37,16 @@ let playing = Monad.return
 let lose board = (Lose, board)
 let win board = (Win, board)
 
-let spawn board =
-  let empty_cells = Board.empty_cells board in
-  let num_of_empty_cells = List.length empty_cells in
-  if num_of_empty_cells = 0 then
-    playing board
-  else
-    let n = Random.int num_of_empty_cells in
-    let x, y = List.nth empty_cells n in
-    let num = if (Random.int 10 = 0) then 4 else 2 in
-    playing (Board.set x y num board)
-
 let check board =
-  if Board.contains winning_number board then
+  let grid = Board.grid board in
+  if Grid.contains winning_number grid then
     win board
-  else if Board.move_available board then
+  else if Grid.move_available grid then
     playing board
   else
     lose board
+
+let spawn board = playing (Board.spawn board)
 
 let play movement board =
   let board' = movement board in

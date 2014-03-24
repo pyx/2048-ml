@@ -5,19 +5,19 @@
  *)
 
 open Graphics
-open Game
 
 let side = 80
 let margin = side
 let line_width = side / 10
 
 let window_size game =
-  let x, y = Board.size (get_board game) in
+  let x, y = game |> Game.board |> Board.grid |> Grid.size in
   let margins = margin + margin in
   x * side + margins, y * side + margins
 
 let frame_color = 0xbbada0
 let info_color = 0x201403
+let stat_color = 0x8b0000
 
 let get_colors = function
   | 2    -> 0x776e65, 0xeee4da
@@ -51,26 +51,34 @@ let draw_cell x y cell =
   if cell <> 0 then draw_centered_text x y side side text
 
 let draw_board board =
-  let dim_x, dim_y = Board.size board in
-  for x = 0 to pred dim_x do
-    for y = 0 to pred dim_y do
-      let cord_x, cord_y = x * side + margin, y * side + margin in
-      let cell = Board.get x (pred dim_y - y) board in
-      draw_cell cord_x cord_y cell
-    done;
-  done
+  let grid = Board.grid board in
+  let _, dim_y = Grid.size grid in
+  let cord_x x = x * side + margin in
+  let cord_y y = (pred dim_y - y) * side + margin in
+  grid
+  |> Grid.to_list
+  |> List.iteri (fun y ->
+      List.iteri (fun x cell ->
+        draw_cell (cord_x x) (cord_y y) cell))
 
 let draw_info game =
   let width, height = window_size game in
-  let info = "2048 in OCaml " ^ version ^ ", r to reset, q or <ESC> to quit" in
+  let ver = Game.version in
+  let info = "2048 in OCaml " ^ ver ^ ", r to reset, q or <ESC> to quit" in
+  let score = Game.score game |> string_of_int in
+  let count = Game.count game |> string_of_int in
+  let stat = "Score: " ^ score ^ " / Move: " ^ count in
+  set_color stat_color;
+  draw_centered_text 0 (height - margin) width (margin / 2) stat;
   set_color info_color;
-  draw_centered_text 0 (height - margin) width margin info;
+  draw_centered_text 0 (height - margin / 2) width (margin / 2) info;
   let sign = "Copyright (c) 2014 pyx." in
   let offset, _ = text_size sign in
   moveto (width - offset - 2) 2;
   draw_string sign;
   let draw_text = draw_centered_text 0 0 width margin in
-  match get_state game with
+  let open Game in
+  match state game with
   | Win -> draw_text "You win!"
   | Lose -> draw_text "You lose."
   | Playing -> draw_text "h j k l to move left, down, up, right respectively"
@@ -82,7 +90,7 @@ let init game =
   resize_window width height
 
 let render game =
-  let board = get_board game in
+  let board = Game.board game in
   auto_synchronize false;
   clear_graph ();
   draw_board board;
