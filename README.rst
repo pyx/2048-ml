@@ -15,14 +15,15 @@ A clone of `2048`_, implemented in `OCaml`_.
 Features
 --------
 
-- GUI with no external dependency
+- Cross-platform GUI with no external dependency, using graphics library that
+  comes with OCaml
 - Text (ascii) output as well
 - Game play actions implemented as *monadic functions*, for example, to place
   two new tiles:
 
   .. code:: ocaml
 
-    playing coard >>= spawn >>= spawn
+    playing board >>= spawn >>= spawn
 
 
 Requirements
