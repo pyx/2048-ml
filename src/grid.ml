@@ -29,9 +29,12 @@ let empty_cells_to_index =
 
 let filter_some =
   let rec loop acc = function
-    | [] -> acc
     | None :: tl -> loop acc tl
     | Some e :: tl -> loop (e :: acc) tl
+    | [] ->
+        match acc with
+        | [] -> None
+        | _ -> Some acc
   in loop []
 
 let empty_cells grid =

@@ -36,8 +36,8 @@ val contains : elt -> t -> bool
 val has_empty_cell : t -> bool
 (** [has_empty_cell e] returns true if grid [g] has any empty cell. *)
 
-val empty_cells : t -> (int * int) list
-(** [empty_cells g] returns a list of indices of all empty cells on [g]. *)
+val empty_cells : t -> (int * int) list option
+(** [empty_cells g] returns a list of indices of empty cells on [g] if any. *)
 
 val move_left : t -> t * elt list list
 (** [move_left g] returns tuple (grid, remved) as [g] being moved left. *)

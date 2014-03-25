@@ -27,12 +27,11 @@ let move_up = move_and_score Grid.move_up
 let move_down = move_and_score Grid.move_down
 
 let spawn (grid, count, score) =
-  let empty_cells = Grid.empty_cells grid in
-  let num_of_empty_cells = List.length empty_cells in
-  if num_of_empty_cells <> 0 then
-    let n = Random.int num_of_empty_cells in
-    let x, y = List.nth empty_cells n in
-    let num = if (Random.int 10 = 0) then 4 else 2 in
-    (Grid.set x y num grid, count, score)
-  else
-    (grid, count, score)
+  match Grid.empty_cells grid with
+  | Some cells ->
+      let num_of_cells = List.length cells in
+      let n = Random.int num_of_cells in
+      let x, y = List.nth cells n in
+      let num = if (Random.int 10 = 0) then 4 else 2 in
+      (Grid.set x y num grid, count, score)
+  | None -> (grid, count, score)
