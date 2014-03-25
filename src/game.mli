@@ -15,9 +15,6 @@ val version : string
 type move = Up | Down | Left | Right
 (** Type of game movement. *)
 
-type action = Move of move | Reset | Quit | Invalid
-(** Type of game action. *)
-
 type state = Playing | Win | Lose
 (** Type of game state. *)
 

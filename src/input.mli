@@ -9,5 +9,8 @@
     Interface to user input.
  *)
 
-val get_action : unit -> Game.action
+type action = Move of Game.move | Reset | Quit | Invalid
+(** Type of game action. *)
+
+val action : unit -> action
 (** [get_action] waits and return the next action from user input. *)

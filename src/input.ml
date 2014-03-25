@@ -6,6 +6,8 @@
 
 open Game
 
+type action = Move of move | Reset | Quit | Invalid
+
 let key_to_action = function
   | 'k' -> Move Up
   | 'j' -> Move Down
@@ -18,4 +20,4 @@ let key_to_action = function
       | 3 | 27 -> Quit  (* <Ctrl-C> = 3, <ESC> = 27 *)
       | _ -> Invalid
 
-let get_action () = Graphics.read_key () |> key_to_action
+let action () = Graphics.read_key () |> key_to_action

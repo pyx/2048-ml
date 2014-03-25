@@ -8,8 +8,6 @@ let version = "0.2"
 
 type move = Up | Down | Left | Right
 
-type action = Move of move | Reset | Quit | Invalid
-
 type state = Playing | Win | Lose
 
 type t = state * Board.t

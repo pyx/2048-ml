@@ -4,24 +4,20 @@
  * License: BSD New, see LICENSE for details.
  *)
 
-open Game
-
-let get_action = Input.get_action
-
 let render game =
   Tui.render game;
   Gui.render game
 
 let init () = Game.init 4 4
 
-let main_loop game get_action render =
+let main_loop action render game =
   let rec loop game' =
     render game';
-    match get_action () with
-    | Move m -> loop (move m game')
-    | Reset -> loop (init ())
-    | Quit -> print_endline "Quit."
-    | Invalid -> loop game'
+    match action () with
+    | Input.Move m -> loop (Game.move m game')
+    | Input.Reset -> loop (init ())
+    | Input.Quit -> print_endline "Quit."
+    | Input.Invalid -> loop game'
   in loop game
 
 let main () =
@@ -29,7 +25,7 @@ let main () =
   Tui.init game;
   Gui.init game;
   try
-    main_loop game get_action render;
+    main_loop Input.action render game;
   with Graphics.Graphic_failure _ -> ();
   Gui.cleanup ();
   Tui.cleanup ()
