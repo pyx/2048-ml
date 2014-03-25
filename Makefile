@@ -18,7 +18,7 @@ exec_prefix ?= $(prefix)
 bindir ?= $(exec_prefix)/bin
 
 SRC = $(wildcard $(realpath $(SRC_DIR))/*.mli) $(wildcard $(realpath $(SRC_DIR))/*.ml)
-FLAGS = -I $(SRC_DIR) -cflags "-w A-4-33-40-41-42-43-34-44" -cflags -strict-sequence
+FLAGS = -I $(SRC_DIR) -cflags "-w A-4-33-40-41-42-43-34-44" -cflag -strict-sequence -cflag -annot
 DEBUG_FLAGS = -cflag -g
 LIBS = -libs graphics
 OCAMLBUILD = ocamlbuild
