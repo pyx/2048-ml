@@ -18,7 +18,7 @@ Features
 - Cross-platform GUI with no external dependency, using graphics library that
   comes with OCaml
 - Text (ascii) output as well
-- Game play actions implemented as *monadic functions*, for example, to place
+- Gameplay actions implemented as *monadic functions*, for example, to place
   two new tiles:
 
   .. code:: ocaml
@@ -37,7 +37,30 @@ To compile
 Installation
 ============
 
-Compile from source
+Gentoo
+------
+
+There are ebuilds come with 2048-ml for each tagged release.
+
+They can also be found (along with Manifest) in my personal overlay:
+
+Mercurial:
+  https://bitbucket.org/pyx/overlay
+
+Git:
+  https://github.com/pyx/overlay.git
+
+With properly added ebuild:
+
+.. code:: bash
+
+  emerge --ask 2048-ml
+
+
+From Source
+-----------
+
+Compile
 
 .. code:: bash
 
