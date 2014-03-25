@@ -60,13 +60,13 @@ Links
 =====
 
 Project:
-  http://xrefactor.com/projects/2048.ml
+  http://xrefactor.com/projects/2048-ml
 
 Issue Tracker:
-  https://bitbucket.org/pyx/2048.ml/issues/
+  https://bitbucket.org/pyx/2048-ml/issues/
 
 Mercurial Repository on Bitbucket:
-  https://bitbucket.org/pyx/2048.ml/
+  https://bitbucket.org/pyx/2048-ml/
 
 Git Repository on Github:
-  https://github.com/pyx/2048.ml/
+  https://github.com/pyx/2048-ml/

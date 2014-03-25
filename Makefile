@@ -2,7 +2,7 @@
 # All rights reserved.
 # License: BSD New, see LICENSE for details.
 
-PROGRAM = 2048.ml
+PROGRAM = 2048-ml
 BUILD_DIR = _build
 SRC_DIR = src
 
