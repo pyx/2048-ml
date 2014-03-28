@@ -2,7 +2,7 @@
 # All rights reserved.
 # License: BSD New, see LICENSE for details.
 
-PROGRAM = 2048-ml
+PROGRAM ?= 2048-ml
 BUILD_DIR = _build
 SRC_DIR = src
 
@@ -18,10 +18,10 @@ exec_prefix ?= $(prefix)
 bindir ?= $(exec_prefix)/bin
 
 SRC = $(wildcard $(realpath $(SRC_DIR))/*.mli) $(wildcard $(realpath $(SRC_DIR))/*.ml)
-FLAGS = -I $(SRC_DIR) -cflags "-w A-4-33-40-41-42-43-34-44" -cflag -strict-sequence -cflag -annot
-DEBUG_FLAGS = -cflag -g
-LIBS = -libs graphics
-OCAMLBUILD = ocamlbuild
+FLAGS := -I $(SRC_DIR) -cflags "-w A-4-33-40-41-42-43-34-44" -cflag -strict-sequence -cflag -annot $(FLAGS)
+DEBUG_FLAGS := -cflag -g $(DEBUG_FLAGS)
+LIBS := -libs graphics $(LIBS)
+OCAMLBUILD ?= ocamlbuild
 
 .PHONY: all debug release run install uninstall clean
 
