@@ -8,12 +8,6 @@ type count = int
 type score = int
 type t = Grid.t * count * score
 
-let init x y = Grid.init x y, 0, 0
-
-let grid (g, _, _) = g
-let count (_, c, _) = c
-let score (_, _, s) = s
-
 module Monad = struct
   let return grid = (grid, 0, 0)
   let bind (grid, count, score) move =
@@ -27,6 +21,12 @@ end
 module Infix = struct
   let ( >>= ) = Monad.bind
 end
+
+let init x y = Grid.init x y |> Monad.return
+
+let grid (g, _, _) = g
+let count (_, c, _) = c
+let score (_, _, s) = s
 
 let spawn (grid, count, score) =
   match Grid.empty_cells grid with
