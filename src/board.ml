@@ -14,17 +14,19 @@ let grid (g, _, _) = g
 let count (_, c, _) = c
 let score (_, _, s) = s
 
-let move_and_score move (grid, count, score) =
-  let sum = List.fold_left (+) 0 in
-  let grid', removed = move grid in
-  let score' = List.flatten removed |> sum in
-  let is_changed = score' <> 0 || grid' <> grid in
-  grid', (if is_changed then succ count else count), score + score'
+module Monad = struct
+  let return grid = (grid, 0, 0)
+  let bind (grid, count, score) move =
+    let sum = List.fold_left (+) 0 in
+    let grid', removed = move grid in
+    let score' = List.flatten removed |> sum in
+    let is_changed = score' <> 0 || grid' <> grid in
+    grid', (if is_changed then succ count else count), score + score'
+end
 
-let move_left = move_and_score Grid.move_left
-let move_right = move_and_score Grid.move_right
-let move_up = move_and_score Grid.move_up
-let move_down = move_and_score Grid.move_down
+module Infix = struct
+  let ( >>= ) = Monad.bind
+end
 
 let spawn (grid, count, score) =
   match Grid.empty_cells grid with
@@ -35,3 +37,10 @@ let spawn (grid, count, score) =
       let num = if (Random.int 10 = 0) then 4 else 2 in
       (Grid.set x y num grid, count, score)
   | None -> (grid, count, score)
+
+open Infix
+
+let move_left board = board >>= Grid.move_left
+let move_right board = board >>= Grid.move_right
+let move_up board = board >>= Grid.move_up
+let move_down board = board >>= Grid.move_down

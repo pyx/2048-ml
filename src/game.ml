@@ -12,18 +12,6 @@ type state = Playing | Win | Lose
 
 type t = state * Board.t
 
-module Monad = struct
-  let return board = (Playing, board)
-  let bind game action =
-    match game with
-    | (Playing, board) -> action board
-    | game -> game
-end
-
-module Infix = struct
-  let ( >>= ) = Monad.bind
-end
-
 let state (s, _) = s
 let board (_, b) = b
 let count (_, b) = Board.count b
@@ -31,7 +19,7 @@ let score (_, b) = Board.score b
 
 let winning_number = 2048
 
-let playing = Monad.return
+let playing board = (Playing, board)
 let lose board = (Lose, board)
 let win board = (Win, board)
 
@@ -44,15 +32,24 @@ let check board =
   else
     lose board
 
-let spawn board = playing (Board.spawn board)
+module Monad = struct
+  let return board = (Playing, board)
+  let bind game action =
+    match game with
+    | Playing, board ->
+        begin match action board with
+        | Playing, board' -> check board'
+        | game -> game
+        end
+    | game -> game
+  let lift f game = board game |> f |> return
+end
 
-let play movement board =
-  let board' = movement board in
-  let not_changed = board = board' in
-  if not_changed then
-    playing board
-  else let open Infix in
-    playing board' >>= spawn >>= check
+module Infix = struct
+  let ( >>= ) = Monad.bind
+end
+
+let spawn board = Board.spawn board |> playing
 
 let move m game =
   let open Infix in
@@ -61,7 +58,7 @@ let move m game =
   | Down -> Board.move_down
   | Left -> Board.move_left
   | Right -> Board.move_right
-  in game >>= play action
+  in Monad.lift action game >>= spawn
 
 let init x y =
   Random.self_init ();
